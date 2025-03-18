@@ -1,50 +1,30 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-import { MagnifyingGlassIcon, BellIcon, BookOpenIcon, UserIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, UserIcon } from "@heroicons/react/24/outline";
 
 const Header = () => {
   return (
-    <nav className="flex justify-between px-20 py-5 items-center bg-white shadow-md">
+    <nav className="w-[393px] bg-[#77B5FE] rounded-lg p-4 flex justify-between items-center">
       {/* Logo */}
-      <h1 className="text-xl text-gray-800 font-bold">EU-TALENT</h1>
-
-      {/* Barre de recherche */}
-      <div className="flex items-center border border-gray-300 px-3 py-1 rounded-lg">
+      <h1 className="text-lg text-white font-bold">EU-TALENT</h1> {/* Changer la couleur du texte en blanc */}
+      
+      {/* Recherche */}
+      <div className="flex items-center border border-gray-300 px-2 py-1 rounded-lg">
         <MagnifyingGlassIcon className="h-5 w-5 text-gray-600" />
         <input
-          className="ml-2 outline-none bg-transparent text-gray-700 placeholder-gray-500"
+          className="ml-2 outline-none bg-transparent text-sm text-gray-700 placeholder-gray-500"
           type="text"
-          name="search"
-          id="search"
           placeholder="Search..."
         />
       </div>
 
-      {/* Navigation */}
-      <ul className="flex items-center space-x-6">
-        <li className="font-semibold text-gray-700 hover:text-gray-900">
-          <Link href="/">Home</Link>
-        </li>
-        <li className="font-semibold text-gray-700 hover:text-gray-900">
-          <Link href="/articles">COUNTRIES</Link>
-        </li>
-
-        {/* Icônes */}
-        <li className="cursor-pointer hover:text-gray-900">
-          <BookOpenIcon className="h-6 w-6 text-gray-600" />
-        </li>
-        <li className="cursor-pointer hover:text-gray-900">
-          <BellIcon className="h-6 w-6 text-gray-600" />
-        </li>
-        <li className="cursor-pointer hover:text-gray-900">
-          <UserIcon className="h-6 w-6 text-gray-600" />
-        </li>
-      </ul>
+      {/* Icône Profil */}
+      <UserIcon className="h-6 w-6 text-gray-600" />
     </nav>
   );
 };
 
 export default Header;
+
+
+

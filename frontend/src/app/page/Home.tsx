@@ -1,22 +1,21 @@
 import React from "react";
-import EuropeMap from "../components/EuropeMap"; // Vérifie que le chemin est correct
+import EuropeMap from "../components/EuropeMap";
+import Header from "../components/header"; // Vérifie la casse !
 
 const Home: React.FC = () => {
   return (
-    <div
-      style={{
-        width: "393px", // Largeur fixée à 393px
-        height: "452px", // Hauteur fixée à 852px
-        margin: "0 auto", // Centrer horizontalement
-        border: "1px solid #ccc", // Optionnel : bordure pour voir la taille
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <EuropeMap />
+    <div className="flex flex-col items-center justify-center w-full h-screen">
+      {/* Header */}
+      <Header />
+
+      {/* Conteneur de la carte */}
+      <div className="flex-grow w-[393px] h-[750px] mt-4 border rounded-lg overflow-hidden">
+        <EuropeMap />
+      </div>
     </div>
   );
 };
 
 export default Home;
+
+
