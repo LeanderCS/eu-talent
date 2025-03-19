@@ -40,18 +40,21 @@ const onEachCountry = (feature: any, layer: any) => {
 
 const EuropeMap: React.FC = () => {
   return (
-    <div style={{ width: "100%", height: "100%", backgroundColor: "#B3D9FF" }}> 
+    <div style={{ width: "100%", height: "100%", backgroundColor: "#b6f3ff" }}> 
       <MapContainer
-  center={[50, 10]}
-  zoom={4}
-  scrollWheelZoom={true}
-  style={{
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#77B5FE", // Mettre le fond bleu clair de la carte ici
-  }}
-  maxBounds={europeBounds}
-  maxBoundsViscosity={1.0}
+      center={[50, 10]}
+      zoom={4} // Zoom initial
+      minZoom={3} // Niveau de zoom minimum (empêche le dézoom trop loin)
+      maxZoom={10} // Zoom max (ajuste selon tes besoins)
+      scrollWheelZoom={true}
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#b6f3ff",
+      }}
+      maxBounds={europeBounds}
+      maxBoundsViscosity={1.0}
+      attributionControl={false}
 >
         {/* Couleurs des pays via GeoJSON */}
         <GeoJSON data={europeGeoJson} onEachFeature={onEachCountry} />

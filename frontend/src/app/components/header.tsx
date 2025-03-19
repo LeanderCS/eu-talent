@@ -4,17 +4,17 @@ import { MagnifyingGlassIcon, UserIcon } from "@heroicons/react/24/outline";
 
 const Header = () => {
   return (
-    <nav className="w-[393px] bg-[#77B5FE] rounded-lg p-4 flex justify-between items-center">
+    <nav className="w-[393px] bg-[#b6f3ff] p-4 flex justify-between items-center">
       {/* Logo */}
       <h1 className="text-lg text-white font-bold">EU-TALENT</h1> {/* Changer la couleur du texte en blanc */}
       
       {/* Recherche */}
-      <div className="flex items-center border border-gray-300 px-2 py-1 rounded-lg">
+      <div className="flex items-center px-2 py-1">
         <MagnifyingGlassIcon className="h-5 w-5 text-gray-600" />
         <input
           className="ml-2 outline-none bg-transparent text-sm text-gray-700 placeholder-gray-500"
           type="text"
-          placeholder="Search..."
+          placeholder="Countries..."
         />
       </div>
 
