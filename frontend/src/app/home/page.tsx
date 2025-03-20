@@ -23,9 +23,14 @@ const Home: React.FC = () => {
     <div className="relative flex flex-col items-center justify-center w-full h-screen bg-black">
       <Header />
 
+<<<<<<< HEAD
       {/* Conteneur de la carte */}
       <div className="w-[393px] h-[750px] overflow-hidden">
         <EuropeMap isPopupVisible={isPopupVisible} />
+=======
+      <div className="w-[393px] h-[750px] overflow-hidden relative z-10">
+        <EuropeMap />
+>>>>>>> 44d9480291317659205a2a4a14c9b7dd9f02e084
       </div>
 
       {/* Bouton d'accès au chat */}
