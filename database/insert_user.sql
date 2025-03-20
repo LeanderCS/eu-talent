@@ -1,0 +1,5 @@
+-- INSERT INTO `user` (`username`, `password`, `country`, `profile_picture`, `created_at`)
+-- VALUES
+--     ('Leander', '123456', 'Germany', 'profile2.jpg', NOW()),
+--     ('Oscar', '123456', 'France', 'profile1.jpg', NOW());
+--
