@@ -14,19 +14,15 @@ WORKDIR /var/www/html
 
 COPY backend .
 
-
-RUN composer install --optimize-autoloader
-RUN composer require "lexik/jwt-authentication-bundle"
-RUN composer require doctrine/doctrine-fixtures-bundle --dev
-
+#RUN composer install --optimize-autoloader --no-scripts
 
 RUN mkdir -p var/cache var/logs var/sessions && \
     chown -R www-data:www-data var/cache var/logs var/sessions
 
 EXPOSE 8080
 
-COPY docker/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+#COPY docker/scripts/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+#RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+#ENTRYPOINT ["docker-entrypoint.sh"]
