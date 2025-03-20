@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link"; 
 
@@ -9,25 +10,24 @@ const CameraRecorder = () => {
   const [videoBlob, setVideoBlob] = useState<Blob | null>(null);
   const recordTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const [cameraBlocked, setCameraBlocked] = useState(false);
 
-  useEffect(() => {
-    if (!videoBlob) {
-      startCamera();
-    }
-  }, [videoBlob]);
-
-  const startCamera = async () => {
+  // Demander l'autorisation d'accéder à la caméra et au micro
+  const requestCameraAccess = async () => {
     try {
       const newStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       setStream(newStream);
       if (videoRef.current) {
         videoRef.current.srcObject = newStream;
       }
+      setCameraBlocked(false); // Caméra autorisée
     } catch (error) {
-      console.error("Erreur lors de l'accès à la caméra :", error);
+      console.error("❌ Accès refusé à la caméra :", error);
+      setCameraBlocked(true); // La caméra a été bloquée par l'utilisateur
     }
   };
 
+  // Gérer l'enregistrement de la vidéo
   const startRecording = () => {
     if (!stream) return;
 
@@ -92,6 +92,12 @@ const CameraRecorder = () => {
     }
   };
 
+  // Effectue une demande de caméra dès que le composant se monte
+  useEffect(() => {
+    requestCameraAccess();
+  }, []);
+
+  // Gérer l'affichage en fonction de l'état de la caméra
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center bg-black relative max-w-[393px] mx-auto">
       {/* Bouton retour à l'accueil */}
@@ -103,6 +109,7 @@ const CameraRecorder = () => {
 
       {!videoBlob ? (
         <>
+          {/* Affichage de la vidéo de la caméra */}
           <video
             ref={videoRef}
             autoPlay
@@ -115,7 +122,7 @@ const CameraRecorder = () => {
                 onClick={stopRecording}
                 className="px-6 py-3 text-white rounded-full text-3xl"
               >
-                ⏹️ 
+                ⏹️
               </button>
             ) : (
               <button
@@ -148,6 +155,19 @@ const CameraRecorder = () => {
               ⬆️
             </button>
           </div>
+        </div>
+      )}
+
+      {/* Affichage du message si la caméra est bloquée */}
+      {cameraBlocked && (
+        <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-2 rounded">
+          <p>Accès à la caméra refusé. <br/> Veuillez activer la caméra dans les réglages de votre navigateur.</p>
+          <button
+            onClick={requestCameraAccess}
+            className="mt-2 px-4 py-2 bg-green-600 rounded"
+          >
+            Réessayer
+          </button>
         </div>
       )}
     </div>
