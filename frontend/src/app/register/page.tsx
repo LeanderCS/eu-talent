@@ -1,51 +1,86 @@
-import React from "react";
+"use client"
+
+import React, { useState } from "react";
+import Link from "next/link";
 
 export default function Register() {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-[#b6f3ff] w-[393px]">
-      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-gray-700 mb-6">
-          Register
-        </h1>
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [message, setMessage] = useState("");
 
-        <form className="flex flex-col">
-          <label className="mb-1 text-gray-600 font-medium">Username</label>
-          <input
-            type="text"
-            placeholder="Username"
-            className="mb-4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black "
-          />
+    const handleRegister = async (e: Event) => {
+        e.preventDefault();
 
-          {/* <input 
-            type="text" 
-            placeholder="Full name"
-            className="mb-4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black "
-          />
-          <label className="mb-1 text-gray-600 font-medium">Email</label> */}
+        if (username.length < 3) {
+            setMessage("Username must have at least 3 characters");
+            return;
+        }
+        if (password.length < 6) {
+            setMessage("Password must have at least 6 characters");
+            return;
+        }
 
-          <label className="mb-1 text-gray-600 font-medium">Password</label>
-          <input
-            type="password"
-            placeholder="••••••••"
-            className="mb-6 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
-          />
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/create-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            });
 
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md transition duration-300"
-          >
-            Register
-          </button>
-        </form>
+            const data = await response.json();
+            if (response.ok) {
+                setMessage("Register successfully !");
+            } else {
+                setMessage(data.error || "Error with registration");
+            }
+        } catch (error) {
+            setMessage("Error with server connection");
+        }
+    };
 
-        <p className="text-gray-600 text-sm text-center mt-4">
-          Already have a account?
-          <a href="/login" className="text-blue-500 hover:underline">
-            {" "}
-            login
-          </a>
-        </p>
-      </div>
-    </div>
-  );
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-[#b6f3ff] w-[393px]">
+            <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+                <h1 className="text-2xl font-bold text-center text-gray-700 mb-6">Register</h1>
+
+                {message && <p className="text-red-500 text-center">{message}</p>}
+
+                <form className="flex flex-col" onSubmit={handleRegister}>
+                    <label className="mb-1 text-gray-600 font-medium">Username</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(event) => setUsername(event.target.value)}
+                        placeholder="Username"
+                        className="mb-4 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black "
+                    />
+
+                    <label className="mb-1 text-gray-600 font-medium">Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="••••••••"
+                        className="mb-6 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
+                    />
+
+                    <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md transition duration-300"
+                    >
+                        Register
+                    </button>
+                </form>
+
+                <p className="text-gray-600 text-sm text-center mt-4">
+                    Already have an account?
+                    <Link href="/login"  className="text-blue-500 hover:underline">
+                        <p>login</p>
+                    </Link>
+                </p>
+            </div>
+        </div>
+    );
 }

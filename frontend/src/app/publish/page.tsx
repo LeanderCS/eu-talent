@@ -107,11 +107,7 @@ const CameraRecorder = () => {
       {/* Bouton retour à l'accueil */}
       <Link href="/home">
         <button className="absolute top-5 right-5 px-4 py-2 z-50 font-extrabold text-3xl">
-<<<<<<< HEAD
-          X
-=======
           <FaTimes />
->>>>>>> main
         </button>
       </Link>
 
