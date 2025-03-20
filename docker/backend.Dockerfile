@@ -16,7 +16,7 @@ COPY backend .
 
 #RUN composer install --optimize-autoloader --no-scripts
 
-RUN composer install --optimize-autoloader
+RUN composer install --no-scripts --no-dev --optimize-autoloader
 
 RUN mkdir -p var/cache var/logs var/sessions && \
     chown -R www-data:www-data var/cache var/logs var/sessions
