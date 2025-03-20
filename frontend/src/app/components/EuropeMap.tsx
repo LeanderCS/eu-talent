@@ -7,8 +7,8 @@ import "leaflet/dist/leaflet.css";
 import europeGeoJson from "../data/europe.json";
 
 const europeBounds = [
-  [75.0, -30.0], // 🔼 Augmente au nord-ouest (plus haut et à gauche)
-  [30.0, 50.0]   // 🔽 Augmente au sud-est (plus bas et à droite, inclut mieux Chypre)
+  [71.2, -25.0], // Nord-Ouest
+  [34.5, 45.0], // Sud-Est
 ];
 
 const EuropeMap: React.FC = () => {
@@ -24,7 +24,10 @@ const EuropeMap: React.FC = () => {
     });
 
     if (feature.properties && feature.properties.NAME) {
-      layer.bindTooltip(feature.properties.NAME, { permanent: false, direction: "center" });
+      layer.bindTooltip(feature.properties.NAME, {
+        permanent: false,
+        direction: "center",
+      });
     }
 
     layer.on("mouseover", function () {
