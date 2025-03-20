@@ -1,22 +1,34 @@
 "use client";
 
-import React from "react";
-import EuropeMap from "../components/EuropeMap";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import EuropeMap from "../components/EuropeMap";
 import Header from "../components/header";
-import NotificationPopup from "../components/NotificationsPopup"; // Assure-toi que l'importation est correcte
+import NotificationPopup from "../components/NotificationsPopup";
 
 const Home: React.FC = () => {
   const router = useRouter();
+  const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Afficher la notification après 10 secondes
+    const timer = setTimeout(() => {
+      setIsPopupVisible(true);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen bg-black z-0">
+    <div className="relative flex flex-col items-center justify-center w-full h-screen bg-black">
       <Header />
 
+      {/* Conteneur de la carte */}
       <div className="w-[393px] h-[750px] overflow-hidden">
-        <EuropeMap />
+        <EuropeMap isPopupVisible={isPopupVisible} />
       </div>
 
+      {/* Bouton d'accès au chat */}
       <button
         onClick={() => router.push("../connecteMessage")}
         className="w-[393px] p-3 bg-blue-600 text-white text-lg font-bold cursor-pointer mb-5"
@@ -24,8 +36,8 @@ const Home: React.FC = () => {
         Accéder au Chat
       </button>
 
-      {/* Affiche la notification automatiquement */}
-      <NotificationPopup />
+      {/* Afficher la popup et son overlay flou */}
+      {isPopupVisible && <NotificationPopup onClose={() => setIsPopupVisible(false)} />}
     </div>
   );
 };
